@@ -1,5 +1,6 @@
 const test = (req, res) => {
-    res.send('Hello World!')
+    res.json({
+        message:'hello api a funcionar'})
   }
 
   module.exports = { test };
