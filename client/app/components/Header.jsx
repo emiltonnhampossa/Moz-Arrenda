@@ -1,11 +1,14 @@
+'use client'
 import React from "react"
 import {FaSearch} from 'react-icons/fa'
 import { Link } from "react-router-dom"
 import ActiveLink from "./ActiveLink"
+import { usePathname } from 'next/navigation'
 
 
 
 export default function Header() {
+  const pathname = usePathname()
   return (
       <header className='bg-slate-200 shadow-md'>
         <div className='flex justify-between items-center max-w-6xl mx-auto p-3'>
@@ -23,19 +26,27 @@ export default function Header() {
         <FaSearch className="text-slate-600"/>
         </form>
         <ul className="flex gap-4">
-            <ActiveLink href='/'>
+           
             <li className="hidden sm:inline text-slate-700 hover:underline">
+            <ActiveLink className={`link ${pathname === '/' ? 'active' : ''}`} href='/'>
                 Home
+             </ActiveLink>
             </li>
-            </ActiveLink>
-            <ActiveLink href="/users/About">
+           
+           
             <li className="hidden sm:inline text-slate-700 hover:underline">
-                About</li>
-                </ActiveLink>
-                <ActiveLink href="/users/SignIn">
+            <ActiveLink  className={`link ${pathname === '/users/about' ? 'active' : ''}`} href="/users/About">
+                About
+             </ActiveLink>
+              </li>
+                
+                
             <li className=" text-slate-700 hover:underline">
-                Sign-in</li>
-                </ActiveLink>
+            <ActiveLink  className={`link ${pathname === '/users/SignIn' ? 'active' : ''}`} href="/users/SignIn">
+                Sign-in
+              </ActiveLink>
+            </li>
+                
         </ul>
         </div>
       </header>
