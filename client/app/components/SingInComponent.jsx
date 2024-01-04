@@ -2,8 +2,8 @@
 import { useState } from "react";
 import ActiveLink from "@/app/components/ActiveLink";
 import { useRouter } from 'next/navigation'
-import { useDispatch, useSelector } from "react-redux";
-import { signInStart, signInSuccess, signInFailure } from "@/app/redux/user/userSlice";
+import {signInStart, signInFailure, signInSuccess} from '@/redux/user/userSlice';
+import { useDispatch } from "react-redux";
 
 const TIMEOUT_DURATION = 10000;
 
@@ -41,15 +41,15 @@ export default function signIn() {
       clearTimeout(timeoutId);
 
       const data = await res.json();
-      console.log(data);
       if(data.success === false){
-        dispatch(signInFailure(data.message));
+        dispatch(signInFailure(data));
         return;
       }
+
       dispatch(signInSuccess(data));
       router.push('/', { scroll: false })
     } catch (error) {
-      dispatch(signInFailure(error.message));
+     dispatch(signInFailure(error));
     }
     
   };
@@ -88,7 +88,8 @@ export default function signIn() {
         <span className="text-blue-700">Sign up</span>
       </ActiveLink>
     </div>
-    {error && <p className="text-red-500 mt-5">{error}</p>}
+    <p className="text-red-500 mt-5">
+    {error ? error.message || 'algo esta errado' : ''}</p>
   </div>
   )
 }
