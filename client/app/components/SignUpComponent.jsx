@@ -1,10 +1,10 @@
 'use client'
 import { useState } from "react";
-import ActiveLink from "./ActiveLink";
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation';
+import ActiveLink from './ActiveLink'
 
 
-const TIMEOUT_DURATION = 10000;
+const TIMEOUT_DURATION = 10000
 
 export default function signup() {
   const [formData, setFormData] = useState({});
@@ -51,8 +51,7 @@ export default function signup() {
       setLoading(false);
       setError(error.message)
     }
-  };
-    
+  }
 
     return( 
     <div className="p-3 max-w-lg mx-auto">
@@ -94,4 +93,4 @@ export default function signup() {
     {error && <p className="text-red-500 mt-5">{error}</p>}
   </div>
   )
-}
+    }

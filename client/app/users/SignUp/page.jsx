@@ -1,4 +1,3 @@
-
 import SignUPComponent from "@/app/components/SignUpComponent";
 
 

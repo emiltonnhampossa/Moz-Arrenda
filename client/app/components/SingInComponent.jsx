@@ -2,16 +2,16 @@
 import { useState } from "react";
 import ActiveLink from "@/app/components/ActiveLink";
 import { useRouter } from 'next/navigation'
-
+import { useDispatch, useSelector } from "react-redux";
+import { signInStart, signInSuccess, signInFailure } from "@/app/redux/user/userSlice";
 
 const TIMEOUT_DURATION = 10000;
 
 export default function signIn() {
   const [formData, setFormData] = useState({});
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const {loading, error } = useSelector((state) => state.user);
   const router = useRouter()
-  
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setFormData({
@@ -20,6 +20,8 @@ export default function signIn() {
     });
   };
 
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true)
@@ -27,6 +29,7 @@ export default function signIn() {
     const timeoutId = setTimeout(() => controller.abort(), TIMEOUT_DURATION);
 
     try {
+      dispatch(signInStart());
       const res = await fetch('http://localhost:4000/api/auth/signin', {
         method: 'POST',
         headers: {
@@ -40,19 +43,17 @@ export default function signIn() {
       const data = await res.json();
       console.log(data);
       if(data.success === false){
-        setLoading(false);
-        setError(data.message)
+        dispatch(signInFailure(data.message));
         return;
       }
-      setLoading(false);
-      setError(null)
+      dispatch(signInSuccess(data));
       router.push('/', { scroll: false })
     } catch (error) {
-      setLoading(false);
-      setError(error.message)
+      dispatch(signInFailure(error.message));
     }
-  };
     
+  };
+     
 
     return( 
     <div className="p-3 max-w-lg mx-auto">
