@@ -3,7 +3,7 @@ import { useState } from "react";
 import ActiveLink from "@/app/components/ActiveLink";
 import { useRouter } from 'next/navigation'
 import {signInStart, signInFailure, signInSuccess} from '@/redux/user/userSlice';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const TIMEOUT_DURATION = 10000;
 
@@ -47,7 +47,6 @@ export default function signIn() {
       }
 
       dispatch(signInSuccess(data));
-      router.push('/', { scroll: false })
     } catch (error) {
      dispatch(signInFailure(error));
     }
